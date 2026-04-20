@@ -64,7 +64,9 @@ class BaseImportImport(models.TransientModel):
         else:
             translated_model_name = self._description
         description = self.env._(
-            "Import %s from file %s", translated_model_name, self.file_name
+            "Import %(model)s from file %(from_file)s",
+            model=translated_model_name,
+            from_file=self.file_name,
         )
         attachment = self._create_csv_attachment(
             import_fields, data, options, self.file_name
@@ -162,12 +164,13 @@ class BaseImportImport(models.TransientModel):
         ):
             chunk = str(priority - INIT_PRIORITY).zfill(padding)
             description = self.env._(
-                "Import %s from file %s - #%s - lines %s to %s",
-                translated_model_name,
-                file_name,
-                chunk,
-                row_from + 1 + header_offset,
-                row_to + 1 + header_offset,
+                "Import %(model)s from file %(file_name)s - #%(chunk)s - "
+                "lines %(from_line)s to %(to_line)s",
+                model=translated_model_name,
+                file_name=file_name,
+                chunk=chunk,
+                from_line=row_from + 1 + header_offset,
+                to_line=row_to + 1 + header_offset,
             )
             # create a CSV attachment and enqueue the job
             root, ext = splitext(file_name)
