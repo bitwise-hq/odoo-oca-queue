@@ -1,7 +1,6 @@
 exclude: |
   (?x)
   # NOT INSTALLABLE ADDONS
-  ^queue_job_batch/|
   ^queue_job_cron/|
   ^queue_job_cron_jobrunner/|
   ^queue_job_subscribe/|
